@@ -1,0 +1,240 @@
+/* [ 1 ] font-family: 'Titillium Web', sans-serif; */
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web&display=swap');
+/* Default Style For All Elements */
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Titillium Web', sans-serif;
+}
+/* Start Of Formly Style [ Main Container ] */
+.Formly{
+    width: 100%;
+    min-height: 100vh;
+    height: 100vh;
+    position: relative;
+}
+/* End Of Formly Style  [ Main Container ] */
+
+/* Formly Flat */
+.Formly-Flat{
+    background-color: #f6f6f6 !important;
+    background: url('/static/base/images/bg-03-02.svg') no-repeat center fixed , url('/static/base/images/bg-03-01.svg') no-repeat left center fixed;
+    padding-top: 25px;
+    padding-top: 25px;
+}
+.Formly-Flat-Form-Container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 25px 25px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+    width: 400px;
+}
+.Formly-Flat-Form-Container .Formly-Header{
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
+.Formly-Flat-Form-Container .Formly-Header div{
+    display: inline-block;
+}
+
+.Formly-Flat-Form-Container .Formly-Header .Formly-Header-logo .img-log{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.Formly-Flat-Form-Container .Formly-Header .Formly-Header-logo .img-log img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.Formly-Flat-Form-Container .Formly-Header .Formly-Header-Title{
+    margin-top: 10px;
+    
+}
+.Formly-Flat-Form-Container .Formly-Header .Formly-Header-Title h3{
+    font-size: 35px;
+    color: #2196F3;
+    font-weight: 700;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms{
+    width: 100%;
+    padding: 10px;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Form-Header{
+    margin-top: 15px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Form-Header .Formly-Flat-Form-Title{
+    margin-bottom: 10px;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Form-Header .Formly-Flat-Form-Title h3{
+    color: #111;
+    font-size: 25px;
+    font-weight: 700;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Form-Header .Formly-Flat-Form-sub-title{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Form-Header .Formly-Flat-Form-sub-title span{
+    color: #1115;
+    font-size: 14px;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms form span{
+    background-color: #fff;
+    border-radius: 0px;
+    border-width: 0px;
+    background-color: #f3f3f3;
+    font-size: 16px;
+    color: #1118;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms form input{
+    border-width: 0px;
+    background-color: #f3f3f3;
+    display: block;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 7px;
+    width: 100%;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms form ul{
+    list-style: none;
+}
+
+.Formly-Flat-Form-Container .Formly-Flat-Forms form ul li{
+    display: block;
+    margin: 5px;
+    color: #e91e63;
+    border: 1px solid #e91e63;
+    padding: 2px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.Formly-Flat-Form-Container .Formly-Flat-Forms input.Formly-password{
+    border-right-width: 0px;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms input::placeholder{
+    color: #1115
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms input:focus {
+    color: #2196F3;
+    border-color: #2196F3;
+    outline: 0;
+    box-shadow: none;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms .formly-show-password{
+    font-size: 18px;
+    color: #1118;
+    cursor: pointer;
+    z-index: 5;
+    border-left-width: 0px;
+    line-height: 2;
+    padding: 0px 10px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    background-color: #f3f3f3;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms .Formly-Submit{
+    width: 100%;
+    text-align: center;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms .Formly-Submit .Formly-btn{
+    padding: 5px 10px;
+    width: 50%;
+    border: 0px;
+    background-color: #2196F3;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms .Formly-Forget-Password{
+    margin-top: 20px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms .Formly-Forget-Password span{
+    color: #2196F3;
+    cursor: pointer;
+    background-color: transparent;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms .Formly-or-line{
+    margin-top: 25px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms .Formly-or-line div{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 90%;
+    height: 1px;
+    background-color: #2196F3
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms .Formly-or-line div span{
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    border: 1px solid #2196F3;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    color: #2196F3;
+    line-height: 20px;
+    background-color: #fff;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms .Fomly-Other-login{
+    margin-top: 30px;
+    width: 100%;
+    border-width: 0px;
+    background-color: #fff;
+    padding: 5px 0px;
+    color: #fff;
+    cursor: pointer;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms  .Formly-Flat-swap-Link{
+    margin-top: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms  .Formly-Flat-swap-Link span{
+    color: #1115;
+    font-size: 14px;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms  .Formly-Flat-swap-Link span.redirect-links{
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: 600;
+}
+.Formly-Flat-Form-Container .Formly-Flat-Forms  .Formly-Flat-swap-Link span a{
+    text-decoration: none;
+}
+@media(max-width:768px){
+    .Formly-Flat-Form-Container{
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        border-radius: 0;
+    } 
+}
+/* End Of Formly Flat */
