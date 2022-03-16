@@ -1,0 +1,65 @@
+{% extends 'pages/users/login_and_registeration_base.html' %} {% load static %}
+
+<!-- Page Title -->
+{% block title %}Create Account | Elcaptain Group{% endblock title %}
+
+<!-- Body Content-->
+{% block body %} {% csrf_token %}
+<!-- Start of Formly [ 1 ] Basic  -->
+<section class="Formly Formly-Flat">
+  <div class="Formly-Flat-Form-Container">
+    <!-- Start Of Formly Head [ Logo ] -->
+    <div class="Formly-Header">
+      <div class="Formly-Header-logo">
+        <!-- Create Logo Using Img [ png , jpg , svg] Remove Comment To Use This Option-->
+
+        <div class="img-log">
+          <img
+            src="{% static 'base/images/logo.png' %}"
+            alt="logo"
+            title="Formy"
+          />
+        </div>
+      </div>
+      <!-- Logo Name-->
+    </div>
+    <!-- End Of Formly Head [ Logo ] -->
+    <div class="Formly-Flat-Forms Formly-Flat-Register-Form">
+      <!-- Start Of Form Header -->
+      <div class="Formly-Flat-Form-Header">
+        <div class="Formly-Flat-Form-Title">
+          <h3>Create an account</h3>
+        </div>
+        <div class="Formly-Flat-Form-sub-title">
+          <span>Setup a new account in a minute</span>
+        </div>
+      </div>
+      <!-- End Of Form Header -->
+      <!-- Start Of Form -->
+      <form method="POST">
+        {% csrf_token %}
+        <div>{{form}}</div>
+
+        <div class="col-12">
+          <div class="Formly-Submit">
+            <button type="submit" class="Formly-btn">Register</button>
+          </div>
+        </div>
+      </form>
+      <!-- End Of Form -->
+      <!-- Start Of Form Footer -->
+      <div class="row">
+        <div class="col-12 Formly-Flat-swap-Link">
+          <span
+            >Already have an account?
+            <a class="login" href="{% url 'Login' %}">Login Here</a></span
+          >
+        </div>
+      </div>
+      <!-- End Of Form Footer -->
+    </div>
+  </div>
+</section>
+<!-- End Of Formly [ 1 ] Basic  -->
+
+{% endblock body %}

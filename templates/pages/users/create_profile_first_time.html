@@ -1,0 +1,113 @@
+{% extends 'pages/users/login_and_registeration_base.html' %} {% load static %}
+
+<!-- Page Title -->
+{% block title %}Create Account | Elsherbiniy Crypto{% endblock title %}
+
+
+<!-- Current Page Styles Files -->
+{% block StylesFiles %}
+
+<style>
+  #id_profile_image{
+    position: relative;
+  }
+
+  ::-webkit-file-upload-button {
+    background-color: #2196f3;
+    color: #fff;
+    border-width: 0;
+    border-radius: 5px;
+    padding: 5px 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .profile-image-span{
+    display: block !important;
+    font-size: 16px !important;
+    background-color: transparent !important;
+  }
+
+</style>
+
+{% endblock StylesFiles %}
+
+
+<!-- Body Content-->
+{% block body %} {% csrf_token %}
+<!-- Start of Formly [ 1 ] Basic  -->
+<section class="Formly Formly-Flat">
+  <div class="Formly-Flat-Form-Container">
+    <!-- Start Of Formly Head [ Logo ] -->
+    <div class="Formly-Header">
+      <div class="Formly-Header-logo">
+        <!-- Create Logo Using Img [ png , jpg , svg] Remove Comment To Use This Option-->
+
+        <div class="img-log">
+          <img
+            src="{% static 'base/images/logo.png' %}"
+            alt="logo"
+            title="Formy"
+          />
+        </div>
+      </div>
+      <!-- Logo Name-->
+    </div>
+    <!-- End Of Formly Head [ Logo ] -->
+    <div class="Formly-Flat-Forms Formly-Flat-Register-Form">
+      <!-- Start Of Form Header -->
+      <div class="Formly-Flat-Form-Header">
+        <div class="Formly-Flat-Form-Title">
+          <h3>Create Profile</h3>
+        </div>
+        <div class="Formly-Flat-Form-sub-title">
+          <span>Complete your profile and start trading</span>
+        </div>
+      </div>
+      <!-- End Of Form Header -->
+      <!-- Start Of Form -->
+      <form method="POST" action="{% url 'create_profile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>{{form}}</div>
+
+        <div class="col-12">
+          <div class="Formly-Submit">
+            <button type="submit" class="Formly-btn">Create Profile</button>
+          </div>
+        </div>
+      </form>
+      <!-- End Of Form -->
+      <!-- Start Of Form Footer -->
+      <div class="row">
+        <div class="col-12 Formly-Flat-swap-Link">
+          <span><a class="login" href="{% url 'Home_page' %}">Home</a></span>
+          <span>- OR -</span>
+          <span><a class="login" href="{% url 'Logout' %}">Logout</a></span>
+        </div>
+      </div>
+      <!-- End Of Form Footer -->
+    </div>
+  </div>
+</section>
+<!-- End Of Formly [ 1 ] Basic  -->
+
+{% endblock body %}
+
+<!-- Current Page Scripts Files -->
+{% block ScriptsFiles %} 
+
+<script>
+
+  $(document).ready(function () {
+    
+    // Create Label For Image field
+    $("#id_profile_image").parent().prepend("<span class='profile-image-span'>Profile Image</span>")
+
+  });
+
+</script>
+
+{% endblock ScriptsFiles %}

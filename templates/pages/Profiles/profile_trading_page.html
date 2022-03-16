@@ -1,0 +1,1127 @@
+<!-- Comment -->
+{% extends 'pages/Profiles/base.html' %}
+
+<!-- Comment -->
+{% load static %}
+
+<!-- Page Title -->
+{% block title %}{{user_first_name}} | Elsherbiniy Crypto{% endblock title %}
+
+<!-- Page Styles -->
+{% block currentPageStylesFiles %}
+
+<!-- Charts Styles -->
+<link href="{% static 'base/css/plugins/apexcharts.css' %}" rel="stylesheet"ntype="text/css" />
+
+<!-- Widgets Styles -->
+<link rel="stylesheet" type="text/css" href="{% static 'base/css/widgets/modules-widgets.css' %}" />
+
+<!-- Controls Style -->
+<link href="{% static 'base/css/elements/miscellaneous.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'base/css/elements/breadcrumb.css' %}" rel="stylesheet" type="text/css" />
+
+<!-- APX Charts-->
+<link href="{% static 'base/css/plugins/apexcharts.css' %}" rel="stylesheet" type="text/css">
+
+<!-- Tables -->
+<link href="{% static 'base/css/table-basic.css' %}" rel="stylesheet" type="text/css" />
+
+<!-- Models -->
+<link href="{% static 'base/css/elements/custom-modal.css' %}" rel="stylesheet" type="text/css" />
+
+<!-- Tabs -->
+<link href="{% static 'base/css/elements/custom-tabs.css' %}" rel="stylesheet" type="text/css" />
+
+<!-- Sweet alerts -->
+<script src="{% static 'base/css/plugins/sweetalerts/promise-polyfill.js' %}"></script>
+<link href="{% static 'base/css/plugins/sweetalerts/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'base/css/plugins/sweetalerts/sweetalert.css' %}" rel="stylesheet" type="text/css" />
+
+<script>
+    // SET Chart Loading Parameters
+    localStorage.setItem('CHART_TIME', 'NONE')
+    localStorage.setItem('CHART_COIN', 'NONE')
+</script>
+
+<!-- Page Styles -->
+<style>
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #fff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #f4f4f4;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f0f0f0;
+  }
+
+  .user-coin-data {
+    width: 100%;
+    overflow: hidden;
+    padding: 10px;
+    box-shadow: 1px 1px 10px #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .user-coin-data .user-coin-data-image {
+    width: 100%;
+  }
+
+  .user-coin-data .user-coin-data-image img {
+    width: 100%;
+  }
+
+  .user-coin-data .user-coin-data-details {
+    overflow-x: hidden;
+  }
+
+  .user-coin-data .user-coin-data-details .coin-symbol {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 10px;
+  }
+
+  .user-coin-data .user-coin-data-details .coin-balance {
+    font-size: 16px;
+    color: #324ccc;
+    font-weight: 700;
+  }
+
+  .breadcrumb-one{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .coins-list {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+  }
+
+  .coins-list .btn-group{
+      margin-right: 10px;
+  }
+
+  .trading-tabel-body{
+      width: 100%;
+      padding: 0 10px;
+  }
+  .view-section-all-data{
+      margin-top: 5px;
+  }
+
+  
+
+</style>
+
+{% endblock currentPageStylesFiles %}
+
+<!-- Page Content -->
+{% block currentBodyContent %}
+
+<!--Main ROW -->
+<div class="row layout-top-spacing">
+  <!-- Start of Controls -->
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+    <nav class="breadcrumb-one" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "User_Trading_Page" %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+            <li class="breadcrumb-item"><a href="{% url "User_Trading_Page" %}">Dashboard</a></li>
+        </ol>
+
+        <div class="trading-controlls">
+            <!-- Direct Trading Order -->
+            <button class="btn btn-success mb-2" data-toggle="modal" data-target="#directTradingModels">Direct Order</button>
+            
+            <!-- Automatic Trading Order -->
+            <button class="btn btn-danger mb-2" data-toggle="modal" data-target="#automaticTradingModels">Automatic Trading</button>
+        </div>
+
+    </nav>
+  </div>
+  <!-- Start of Controls -->
+  
+
+  <!-- User Running Trades -->
+  <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 layout-spacing">
+    <div
+      class="widget widget-card-two"
+      style="height: 100%; overflow-y: scroll"
+    >
+      <div class="widget-content">
+        <!-- User Coins Header -->
+        <div class="media">
+          
+          <!-- Section Title -->
+            <div class="w-img">
+                <img src="{% static 'base/images/schedule.png' %}" alt="Coins" style="border-radius: 0; border-width: 0" />
+            </div>
+            <div class="media-body">
+                <h6>Running Trades</h6>
+                <p class="meta-date-time">Last 5 running trades</p>
+            </div>
+
+            <!-- view all section data -->
+            <!-- view all section data -->
+            <div class="view-section-all-data">
+                <button class="btn btn-dark" title="Refresh" id="refresh-last-running-trades"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></button>
+                <a class="btn btn-outline-danger" title="View all" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+            </div>
+
+        </div>
+        <!-- End User Coins Header -->
+
+        <!-- Trading Body -->
+        <div class="trading-tabel-body">
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Coins</th>
+                            <th>Trading Type</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="last-5-running-profile-trades">
+                        
+                        {% for trade in current_profile_running_trades %}
+                            <tr>
+                                <td>{{trade.first_trading_coin.coin_symbol}}/{{trade.second_trading_coin.coin_symbol}}</td>
+                                <td>{{trade.trading_type}}</td>
+                                <td class="text-center">
+                                    <ul class="table-controls">
+                                        <li><a href="{% url 'automatic_trading_deal' id=trade.id %}" target="_blank"  data-toggle="tooltip" data-placement="top" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+    
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- End Trading Body -->
+      </div>
+    </div>
+  </div>
+  <!-- End User Running Trades -->
+
+  <!-- User Complete Trades -->
+  <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 layout-spacing">
+    <div
+      class="widget widget-card-two"
+      style="height: 100%; overflow-y: scroll"
+    >
+      <div class="widget-content">
+        <!-- User Coins Header -->
+        <div class="media">
+          
+            <!-- Section Title -->
+            <div class="w-img">
+                <img src="{% static 'base/images/trade.png' %}" alt="Coins" style="border-radius: 0; border-width: 0" />
+            </div>
+            <div class="media-body">
+                <h6>Complete Trades</h6>
+                <p class="meta-date-time">Last 5 complete trades</p>
+            </div>
+
+            <!-- view all section data -->
+            <div class="view-section-all-data">
+                <button class="btn btn-dark" title="Refresh" id="refresh-last-complete-trades"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></button>
+                <a class="btn btn-outline-danger" title="View all" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+            </div>
+
+        </div>
+        <!-- End User Coins Header -->
+
+        <!-- Trading Body -->
+        <div class="trading-tabel-body">
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Coins</th>
+                            <th>Trading Type</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="last-5-complete-profile-trades">
+                        
+    
+                        {% for trade in current_profile_commplete_trades %}
+                            <tr>
+                                <td>{{trade.first_trading_coin.coin_symbol}}/{{trade.second_trading_coin.coin_symbol}}</td>
+                                <td>{{trade.trading_type}}</td>
+                                <td class="text-center">
+                                    <ul class="table-controls">
+                                        <li><a href="{% url 'automatic_complete_trading_deal' id=trade.id %}" target="_blank"  data-toggle="tooltip" data-placement="top" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+    
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- End Trading Body -->
+      </div>
+    </div>
+  </div>
+  <!-- End User Complete Trades -->
+
+  <!-- User Direct Trades -->
+  <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 layout-spacing">
+    <div
+      class="widget widget-card-two"
+      style="height: 100%; overflow-y: scroll"
+    >
+      <div class="widget-content">
+        <!-- User Coins Header -->
+        <div class="media">
+          
+            <!-- Section Title -->
+            <div class="w-img">
+                <img src="{% static 'base/images/done.png' %}" alt="Coins" style="border-radius: 0; border-width: 0" />
+            </div>
+            <div class="media-body">
+                <h6>Direct Orders</h6>
+                <p class="meta-date-time">Last 5 Direct Orders</p>
+            </div>
+
+            <!-- view all section data -->
+            <!-- view all section data -->
+            <div class="view-section-all-data">
+                <button class="btn btn-dark" title="Refresh" id="refresh-last-direct-orders"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></button>
+                <a class="btn btn-outline-danger" title="View all" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+            </div>
+
+        </div>
+        <!-- End User Coins Header -->
+
+        <!-- Trading Body -->
+        <div class="trading-tabel-body">
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Coins</th>
+                            <th>Trading Type</th>
+                            <th>Order Type</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="last-5-profile-direct-trades">
+                        
+                        {% for trade in current_profile_direct_trades %}
+                            <tr>
+                                <td>{{trade.first_trading_coin.coin_symbol}}/{{trade.second_trading_coin.coin_symbol}}</td>
+                                <td>{{trade.trading_type}}</td>
+                                <td>{{trade.trading_order_type}}</td>
+                                <td class="text-center">
+                                    <ul class="table-controls">
+                                        <li><a href="#"  data-toggle="tooltip" data-placement="top" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- End Trading Body -->
+      </div>
+    </div>
+  </div>
+  <!-- End User Direct Trades -->
+
+  <!-- Start of Trading Chart -->
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+    <div class="widget widget-card-two">
+      <div class="widget-content">
+        <!-- User Coins Header -->
+        <div class="media">
+          <div class="w-img">
+            <img src="{% static 'base/images/dollar.png' %}" alt="Coins" style="border-radius: 0; border-width: 0" />
+          </div>
+          <div class="media-body">
+            <h6>Your Coins</h6>
+            <p class="meta-date-time" id="current_coins">{{first_coin.asset}}/USDT</p>
+            <span>Balance: <span id="coins_balance"> Loading... </span></span>
+          </div>
+
+          <div class="coins-list" id="current_user_coins_hours_list" style="overflow-x: scroll;">
+            <!-- Chart Period -->
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="chart_hours btn btn-outline-dark btn-lg active" data-hour="1">1H</button>
+                <button type="button" class="chart_hours btn btn-outline-dark btn-lg" data-hour="6" >6H</button>
+                <button type="button" class="chart_hours btn btn-outline-dark btn-lg" data-hour="12" >12H</button>
+                <button type="button" class="chart_hours btn btn-outline-dark btn-lg" data-hour="18" >18H</button>
+                <button type="button" class="chart_hours btn btn-outline-dark btn-lg" data-hour="24" >24H</button>
+            </div>
+
+
+            <!-- Coins List -->
+            <select class="selectpicker btn-lg" id="current_user_coins_list">
+
+                {% for coin in account_coins_list %}
+                    <option value="{{coin.asset}}USDT" data-coin="{{coin.asset}}/USDT" {% if coin == first_coin %} selected {% endif %}>{{coin.asset}}/USDT</option>
+                {% endfor %}
+
+            </select>
+
+          </div>
+        </div>
+        <!-- End User Coins Header -->
+
+        <!-- User Coins Body -->
+        <div class="card-bottom-section trading_chart">
+          
+            <!-- Current Selected Coin Chart -->
+            <div id="trading_chart"></div>
+
+        </div>
+        <!-- End User Coins Body -->
+      </div>
+    </div>
+  </div>
+  <!-- End of Trading Chart -->
+
+</div>
+
+ <!-- ================================================================================================ -->
+  <!-- ====================================== START MODELS ============================================ -->
+  
+    <!-- DIRECT TRADINGS -->
+    <div class="modal fade" id="directTradingModels" tabindex="-1" role="dialog" aria-labelledby="directTradingModelsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                
+                <!-- Model Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="directTradingModelsLabel">Direct Orders</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #555">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#555" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <!-- Model Body -->
+                <div class="modal-body">
+                    
+                    <!-- Start TABS -->
+                    <ul class="nav nav-tabs  mb-3 mt-3" id="iconTab" role="tablist">
+                        
+                        <!-- TAB-1: MARKET ORDER-->
+                        <li class="nav-item">
+                            <a class="nav-link active" id="icon-market-tab" data-toggle="tab" href="#icon-market" role="tab" aria-controls="icon-market" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg> Market Order</a>
+                        </li>
+                        
+                        <!-- TAB-2: LIMIT ORDER-->
+                        <li class="nav-item">
+                            <a class="nav-link" id="icon-limit-tab" data-toggle="tab" href="#icon-limit" role="tab" aria-controls="icon-limit" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg> Limit Order</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" id="iconTabContent-1">
+                        
+                        <!-- MARKET FORM -->
+                        <div class="tab-pane fade show active" id="icon-market" role="tabpanel" aria-labelledby="icon-market-tab">
+                            
+                            <!-- MARKET TRADING FORM -->
+                            <form id="submit_direct_market_order_form" method="POST">
+								
+                                {% csrf_token %}
+                                
+                                <!-- FORM -->
+                                {{directMarketOrderForm}}
+
+								
+								<!-- Model Footer -->
+                                <div class="modal-footer">
+                                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                    <button type="submit" class="btn btn-danger">Send Market Order</button>
+                                </div>
+
+							</form>
+
+                        </div>
+
+                        <!-- LIMIT FORM -->
+                        <div class="tab-pane fade" id="icon-limit" role="tabpanel" aria-labelledby="icon-limit-tab">
+                            
+                            <!-- LIMIT TRADING FORM -->
+                            <form method="POST" id="submit_direct_limit_order_form">
+								
+                                {% csrf_token %}
+                                
+                                <!-- FORM -->
+                                {{directLimitOrderForm}}
+
+								
+								<!-- Model Footer -->
+                                <div class="modal-footer">
+                                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                    <button type="submit" class="btn btn-success">Send Limit Order</button>
+                                </div>
+
+							</form>
+                         
+                        </div>
+ 
+                    </div>
+                    
+                    
+                    <!-- End TABS -->
+
+                </div>
+
+                
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Automatic TRADINGS -->
+    <div class="modal fade" id="automaticTradingModels" tabindex="-1" role="dialog" aria-labelledby="automaticTradingModelsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                
+                <!-- Model Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="directTradingModelsLabel">Automatic Orders</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #555">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#555" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <!-- Model Body -->
+                <div class="modal-body">
+                    
+                   <!-- LIMIT TRADING FORM -->
+                   <form method="POST" id="submit_automatic_trading_form">
+								
+                        {% csrf_token %}
+                        
+                        <!-- FORM -->
+                        {{automaticTradingForm}}
+
+                        
+                        <!-- Model Footer -->
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                            <button type="submit" class="btn btn-danger">Start Trading</button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+  <!-- ======================================= END MODELS ============================================= -->
+  <!-- ================================================================================================ -->
+  
+
+{% endblock currentBodyContent %}
+
+<!-- Page Scripts -->
+{% block currentPageScriptsFiles %}
+
+<!-- APX Charts -->
+<script src="{% static 'base/js/apexcharts.min.js' %}"></script>
+
+<!-- Sweet alerts -->
+<script src="{% static 'base/js/sweetalert2.min.js' %}"></script>
+
+<!-- Trading Chart Implementation -->
+<script>
+    
+    // Setups after page ready
+    $(function(){
+
+        // Update LIMIT Label
+        document.querySelector("#submit_direct_limit_order_form #id_limit_order_quantity").previousElementSibling.textContent = "Limit Price";
+        
+        // Update Order Quantity TItle
+        document.querySelector("#submit_direct_market_order_form #id_order_quantity").previousElementSibling.textContent = "Order Quantity [For First Coin]";
+        document.querySelector("#submit_direct_limit_order_form #id_order_quantity").previousElementSibling.textContent = "Order Quantity [For First Coin]";
+
+    });
+
+    // ========================= Start Functions Functions =============================
+
+    // [1] Coins Chart
+    function getCoinMarketData(){
+
+        // Start Code
+
+        let API_Status = localStorage.getItem('API_CONNECTION_STATE');
+
+        if (API_Status == "TRUE"){
+            
+            // Get Time and Coin
+            var selected_coin = localStorage.getItem('CHART_COIN');
+            var selected_time = localStorage.getItem('CHART_TIME');
+
+            // Check Coin
+            if (selected_coin != "NONE"){
+                var coin_name = selected_coin;
+            }else{
+                var coin_name = $("#current_user_coins_list").val();
+            }
+            
+            // Check Time
+            if (selected_time != "NONE"){
+                var rate_hours = selected_time;
+            }else{
+                var rate_hours = $("#current_user_coins_hours_list .active").attr("data-hour");
+            }
+
+            // Get Home page content
+            $.ajax({
+                type:"POST",
+                url:"/profiles/getCoinMarketData/",
+                data:{
+                    coin_name :coin_name,
+                    rate_hours: rate_hours,
+                    csrfmiddlewaretoken:$("input[name=csrfmiddlewaretoken]").val()
+                },
+                success:function(data){
+                    
+                    // Coins Data
+                    $("#coins_balance").html( data["COINS"]["coin_1"] + data["COINS"]["coin_1_name"] + "/" + data["COINS"]["coin_2"] + "USDT")
+
+                    // Chart
+                    if(data["API_STATUS"] == "TRUE"){
+                        
+                        var sLineArea = {
+                            chart: {
+                                height: 500,
+                                type: 'area',
+                                toolbar: {
+                                show: false,
+                                }
+                            },
+                            dataLabels: {
+                                enabled: false
+                            },
+                            stroke: {
+                                curve: 'smooth'
+                            },
+                            series: [{
+                                name: "Market Open",
+                                data: data["DATA_FRAME"]["Open"],
+                            }, 
+                            {
+                                name: "Market Close",
+                                data: data["DATA_FRAME"]["Close"]
+                            }, 
+                            {
+                                name: "Market High",
+                                data: data["DATA_FRAME"]["High"]
+                            }, 
+                            {
+                                name: "Market Low",
+                                data: data["DATA_FRAME"]["Low"]
+                            }
+                            ],
+                        
+                            xaxis: {
+                                type: 'Datetime',
+                                categories: data["DATA_FRAME"]["Time"],
+                                labels: {
+                                    show: false,
+                                },             
+                            },
+                            tooltip: {
+                                x: {
+                                    format: 'dd/MM/yy HH:mm'
+                                },
+                            }
+                        }
+                        
+                        var chart = new ApexCharts(
+                            document.querySelector("#trading_chart"),
+                            sLineArea
+                        );
+                        
+                        chart.render();
+                    }else{
+                        console.log('Invalid Connection')
+                    }
+
+
+
+                }
+            });
+        }
+
+        // End Code
+
+    }
+
+    // [2] Refresh Lasr 5 Direct orders list
+    function refreshLast5DirectOrdersList(){
+
+        // Start AJAX
+        $.ajax({
+            type:"POST",
+            url:"/profiles/getLast5DirectOrders/",
+            data:{
+                csrfmiddlewaretoken:$("input[name=csrfmiddlewaretoken]").val()
+            },
+            success:function(data){
+                
+                // Chart
+                 if(data["PROFILE_STATUS"] == "TRUE"){
+                    
+                    // Clear Table Body
+                    $("#last-5-profile-direct-trades").html("");
+                    
+                    // Append Trades Elements
+                    data["TRADES"].forEach(element => $("#last-5-profile-direct-trades").append(element));    
+                    
+                }else{
+                    console.log('No Profile Detected!')
+                }
+
+            }
+        });
+
+        // End AJAX
+
+    }
+
+    // [3] Refresh Lasr 5 Running Trades list
+    function refreshLast5RunningTradesList(){
+
+        // Start AJAX
+
+        // Get Home page content
+        $.ajax({
+            type:"POST",
+            url:"/profiles/getLast5RunningTrades/",
+            data:{
+                csrfmiddlewaretoken:$("input[name=csrfmiddlewaretoken]").val()
+            },
+            success:function(data){
+                
+                // Chart
+                 if(data["PROFILE_STATUS"] == "TRUE"){
+                    
+                    // Clear Table Body
+                    $("#last-5-running-profile-trades").html("");
+                    
+                    // Append Trades Elements
+                    data["TRADES"].forEach(element => $("#last-5-running-profile-trades").append(element));    
+                    
+                }else{
+                    console.log('No Profile Detected!')
+                }
+
+            }
+        });
+
+        // End AJAX
+
+    }
+
+    // [4] Refresh Lasr 5 Complete Trades list
+    function refreshLast5CompleteTradesList(){
+        
+        // Start AJAX
+
+        // Get Home page content
+        $.ajax({
+            type:"POST",
+            url:"/profiles/getLast5CompleteTrades/",
+            data:{
+                csrfmiddlewaretoken:$("input[name=csrfmiddlewaretoken]").val()
+            },
+            success:function(data){
+                
+                // Chart
+                 if(data["PROFILE_STATUS"] == "TRUE"){
+                    
+                    // Clear Table Body
+                    $("#last-5-complete-profile-trades").html("");
+                    
+                    // Append Trades Elements
+                    data["TRADES"].forEach(element => $("#last-5-complete-profile-trades").append(element));    
+                    
+                }else{
+                    console.log('No Profile Detected!')
+                }
+
+            }
+        });
+
+        // End AJAX
+
+    }
+
+
+    // ========================= END Functions =============================
+
+    // Load Coins Chart Data For First time
+    getCoinMarketData();
+
+    // Update Chart On changing the coin
+    $(document).on("change", "#current_user_coins_list", function(){
+        
+        // Wating For Update
+        $("#trading_chart").html(`<div class="spinner-border text-danger align-self-center"></div>`)
+
+        // Change the current Coins Name
+        var currency_name = ($(this).val()).split("USDT")
+        $("#current_coins").html( currency_name[0] + "/USDT");
+        $("#coins_balance").html("Loading...")
+
+        // Rest the chart coin 
+        localStorage.setItem('CHART_COIN', $(this).val())
+
+        // Change Chart
+        getCoinMarketData();
+
+    });
+
+    // Update Chart On changing the time
+    $(document).on("click", "#current_user_coins_hours_list .btn-group .chart_hours", function(){
+        
+        // Wating For Update
+        $("#trading_chart").html(`<div class="spinner-border text-danger align-self-center"></div>`)
+
+        // Change activation
+        $(this).addClass("active").siblings().removeClass("active");
+
+        // Rest the chart coin 
+        localStorage.setItem('CHART_TIME', $(this).attr("data-hour"))
+
+        // Change Chart
+        getCoinMarketData();
+
+    });
+
+    // Coins Chart Update
+    setInterval(function () {
+
+        // Start Code
+
+        // Update Chart
+        getCoinMarketData();
+
+        // End Code
+
+
+    }, 60000);
+
+
+    // --- REFRESH TABELS ----- 
+
+    // [1] REFRESH RUNNING TRADES
+    $(document).on("click", "#refresh-last-running-trades", function(){
+        
+        // Call Refresh Function
+        refreshLast5RunningTradesList();
+
+    });
+
+    // [2] REFRESH COMPLETE TRADES
+    $(document).on("click", "#refresh-last-complete-trades", function(){
+        
+        // Call Refresh Function
+        refreshLast5CompleteTradesList();
+
+    });
+
+    // [3] REFRESH DIRECT TRADES
+    $(document).on("click", "#refresh-last-direct-orders", function(){
+
+        // Call Refresh Function
+        refreshLast5DirectOrdersList();
+
+    });
+
+    // --- END REFRESH TABELS -----
+
+    
+    // FORMS-[1]: Direct Market Trading Form
+    $(document).on('submit', "#submit_direct_market_order_form", function(e){
+            
+        // Prevent the submit action
+        e.preventDefault();
+
+        // Create form data object
+        var formData = new FormData();
+        
+        // Append the current file data to the form
+        formData.append("first_trading_coin", $("#submit_direct_market_order_form #id_first_trading_coin").val());
+        formData.append("second_trading_coin", $("#submit_direct_market_order_form #id_second_trading_coin").val());
+        formData.append("order_quantity", $("#submit_direct_market_order_form #id_order_quantity").val());
+        formData.append("trading_order_type", $("#submit_direct_market_order_form #id_trading_order_type").val());
+        
+        // CSRF TOKEN
+        formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+
+        // Get Image Src
+        $.ajax({
+            type:"POST",
+            url:"/profiles/direct_market_order/",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success:function(data){
+                
+                // Profile Detection
+                if (data["PROFILE_STATUS"] == "TRUE"){
+
+                    // Order Status
+                    if (data["ORDER_STATUS"] == "TRUE"){
+                        
+                        // Refress direct orders list
+                        refreshLast5DirectOrdersList();
+
+                        // Close the Form
+                        $(".modal-backdrop").removeClass("show");
+                        $("#directTradingModels").removeClass("show");
+
+                        // Order Submitted Successfully notification
+                        const toast = swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 5000,
+                            padding: '2em'
+                          });
+                        
+                          toast({
+                            type: 'success',
+                            title: 'Successfully Submitted Market Order',
+                            padding: '2em',
+                          })
+
+                    }else{
+
+                        // Order Not submited successfully notification
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: data['ORDER_ERROR_MESSAGE'],
+                            padding: '2em'
+                        })
+
+                    }
+
+                }else{
+
+                    // Profile error notification
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: "Please Login again",
+                        padding: '2em'
+                    })
+
+                }
+                console.log(data)
+
+            }
+        });
+
+
+    });
+
+    // FORMS-[2]: Direct Limit Trading Form
+    $(document).on('submit', "#submit_direct_limit_order_form", function(e){
+            
+        // Prevent the submit action
+        e.preventDefault();
+
+        // Create form data object
+        var formData = new FormData();
+        
+        // Append the current file data to the form
+        formData.append("first_trading_coin", $("#submit_direct_limit_order_form #id_first_trading_coin").val());
+        formData.append("second_trading_coin", $("#submit_direct_limit_order_form #id_second_trading_coin").val());
+        formData.append("order_quantity", $("#submit_direct_limit_order_form #id_order_quantity").val());
+        formData.append("trading_order_type", $("#submit_direct_limit_order_form #id_trading_order_type").val());
+        formData.append("limit_order_quantity", $("#submit_direct_limit_order_form #id_limit_order_quantity").val());
+        
+        // CSRF TOKEN
+        formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+
+        // Get Image Src
+        $.ajax({
+            type:"POST",
+            url:"/profiles/direct_limit_order/",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success:function(data){
+                
+                // Profile Detection
+                if (data["PROFILE_STATUS"] == "TRUE"){
+
+                    // Order Status
+                    if (data["ORDER_STATUS"] == "TRUE"){
+                        
+                        // Refress direct orders list
+                        refreshLast5DirectOrdersList();
+
+                        // Close the Form
+                        $(".modal-backdrop").removeClass("show");
+                        $("#directTradingModels").removeClass("show");
+
+                        // Order Submitted Successfully notification
+                        const toast = swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 5000,
+                            padding: '2em'
+                          });
+                        
+                          toast({
+                            type: 'success',
+                            title: 'Successfully Submitted Limit Order',
+                            padding: '2em',
+                          })
+
+                    }else{
+
+                        // Order Not submited successfully notification
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: data['ORDER_ERROR_MESSAGE'],
+                            padding: '2em'
+                        })
+
+                    }
+
+                }else{
+
+                    // Profile error notification
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: "Please Login again",
+                        padding: '2em'
+                    })
+
+                }
+
+            }
+        });
+
+    });
+
+
+    // FORMS-[3]: Automatic Trading Form
+    $(document).on('submit', "#submit_automatic_trading_form", function(e){
+            
+        // Prevent the submit action
+        e.preventDefault();
+
+        // Create form data object
+        var formData = new FormData();
+        
+        // Append the current file data to the form
+        formData.append("first_trading_coin", $("#submit_automatic_trading_form #id_first_trading_coin").val());
+        formData.append("second_trading_coin", $("#submit_automatic_trading_form #id_second_trading_coin").val());
+        formData.append("trading_quantity", $("#submit_automatic_trading_form #id_trading_quantity").val());
+        formData.append("target_quantity", $("#submit_automatic_trading_form #id_target_quantity").val());
+        formData.append("trading_type", $("#submit_automatic_trading_form #id_trading_type").val());
+        
+        // CSRF TOKEN
+        formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+
+        // Get Image Src
+        $.ajax({
+            type:"POST",
+            url:"/profiles/automatic_trading/",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success:function(data){
+                
+                // Profile Detection
+                if (data["PROFILE_STATUS"] == "TRUE"){
+
+                    // Order Status
+                    if (data["ORDER_STATUS"] == "TRUE"){
+                        
+                        // Refress direct orders list
+                        refreshLast5RunningTradesList();
+                        refreshLast5CompleteTradesList();
+
+                        // Close the Form
+                        $(".modal-backdrop").removeClass("show");
+                        $("#automaticTradingModels").removeClass("show");
+
+                        // Order Submitted Successfully notification
+                        const toast = swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 5000,
+                            padding: '2em'
+                          });
+                        
+                          toast({
+                            type: 'success',
+                            title: 'Automatic Trading Started Successfully',
+                            padding: '2em',
+                          })
+
+                    }else{
+
+                        // Order Not submited successfully notification
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: data['ORDER_ERROR_MESSAGE'],
+                            padding: '2em'
+                        })
+
+                    }
+
+                }else{
+
+                    // Profile error notification
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: "Please Login again",
+                        padding: '2em'
+                    })
+
+                }
+
+            }
+        });
+
+    });
+
+</script>
+
+{% endblock currentPageScriptsFiles %}

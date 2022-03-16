@@ -1,0 +1,398 @@
+<!-- Comment -->
+{% extends 'pages/Profiles/base.html' %}
+
+<!-- Comment -->
+{% load static %}
+
+<!-- Page Title -->
+{% block title %}{{user_first_name}} | Elsherbiniy Crypto{% endblock title %}
+
+<!-- Page Styles -->
+{% block currentPageStylesFiles %}
+
+<!-- Widgets Styles -->
+<link rel="stylesheet" type="text/css" href="{% static 'base/css/widgets/modules-widgets.css' %}" />
+
+<!-- Controls Style -->
+<link href="{% static 'base/css/elements/miscellaneous.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'base/css/elements/breadcrumb.css' %}" rel="stylesheet" type="text/css" />
+
+<!-- Profile Styles -->
+<link href="{% static 'base/css/user-profile.css' %}" rel="stylesheet" type="text/css" />
+
+<!-- Tables -->
+<link href="{% static 'base/css/table-basic.css' %}" rel="stylesheet" type="text/css" />
+
+<!-- Models -->
+<link href="{% static 'base/css/elements/custom-modal.css' %}" rel="stylesheet" type="text/css" />
+
+<!-- Profile Settings -->
+<link href="{% static 'base/css/plugins/dropify/dropify.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'base/css/account-setting.css' %}" rel="stylesheet" type="text/css" />
+
+<script>
+    // SET Chart Loading Parameters
+    localStorage.setItem('CHART_TIME', 'NONE')
+    localStorage.setItem('CHART_COIN', 'NONE')
+</script>
+
+<!-- Page Styles -->
+<style>
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #fff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #f4f4f4;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f0f0f0;
+  }
+
+  .user-profile .widget-content-area .user-info-list ul.contacts-block{
+      max-width: 80%
+  }
+
+</style>
+
+{% endblock currentPageStylesFiles %}
+
+<!-- Page Content -->
+{% block currentBodyContent %}
+
+<!--Main ROW -->
+<div class="row layout-top-spacing">
+  <!-- Start of Controls -->
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+    <nav class="breadcrumb-one" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "User_Trading_Page" %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+            <li class="breadcrumb-item"><a href="{% url "display_user_profile" %}">Profile</a></li>
+        </ol>
+        
+    </nav>
+  </div>
+  <!-- End of Controls -->
+
+
+  <!-- START PAGE CONTENT -->
+  <!-- Content -->
+  <div class="col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing">
+
+    <div class="user-profile layout-spacing">
+        <div class="widget-content widget-content-area">
+            <div class="d-flex justify-content-between">
+                <h3 class="">Profile</h3>
+                <button style="border: 0;" class="mt-2 edit-profile" data-toggle="modal" data-target="#updateProfileData"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></button>
+            </div>
+            <div class="text-center user-info">
+                <img src="{{profile_image.url}}" alt="avatar" style="width: 100%; max-width: 400px;">
+                <p class="">{{user_first_name}} {{user_last_name}}</p>
+            </div>
+            <div class="user-info-list">
+
+                <div class="">
+                    <ul class="contacts-block list-unstyled">
+                        <li class="contacts-block__item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-coffee"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg> Web Developer
+                        </li>
+                        <li class="contacts-block__item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Jan 20, 1989
+                        </li>
+                        <li class="contacts-block__item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>New York, USA
+                        </li>
+                        <li class="contacts-block__item">
+                            <a href="mailto:{{user_email}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>{{user_email}}</a>
+                        </li>
+                        <li class="contacts-block__item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> +1 (530) 555-12121
+                        </li>
+                        <li class="contacts-block__item">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <div class="social-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item">
+                                    <div class="social-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item">
+                                    <div class="social-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>                                    
+            </div>
+        </div>
+    </div>
+
+</div>
+
+  
+  <!-- END PAGE CONTENT -->
+</div>
+
+<!-- ================================================================================================ -->
+<!-- ====================================== START MODELS ============================================ -->
+<!-- DIRECT TRADINGS -->
+<div class="modal fade" id="updateProfileData" tabindex="-1" role="dialog" aria-labelledby="updateProfileDataLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            
+            <!-- Model Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateProfileDataLabel">Update Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #555">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#555" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- Model Body -->
+            <div class="modal-body">
+                
+                <!-- Start TABS -->
+                <ul class="nav nav-tabs  mb-3 mt-3" id="iconTab" role="tablist">
+                    
+                    <!-- TAB-1: Update Profile Data-->
+                    <li class="nav-item">
+                        <a class="nav-link active" id="icon-profile-data-tab" data-toggle="tab" href="#icon-profile-data" role="tab" aria-controls="icon-profile-data" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Profile</a>
+                    </li>
+                    
+                    <!-- TAB-2: Profile Avatar -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="icon-avatar-tab" data-toggle="tab" href="#icon-avatar" role="tab" aria-controls="icon-avatar" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Profile Avatar</a>
+                    </li>
+
+                    <!-- TAB-3: Profile API -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="icon-api-tab" data-toggle="tab" href="#icon-api" role="tab" aria-controls="icon-api" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Binance API</a>
+                    </li>
+
+                    <!-- TAB-4: Change Password -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="icon-password-tab" data-toggle="tab" href="#icon-password" role="tab" aria-controls="icon-password" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Change Password</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content" id="iconTabContent-1">
+                    
+                    <!-- TAB-1: Update Profile Data FORM -->
+                    <div class="tab-pane fade show active" id="icon-profile-data" role="tabpanel" aria-labelledby="icon-profile-data-tab">
+                        
+                        <!-- Update Profile Data FORM -->
+                        <form method="POST" action="{% url 'update_user_data' %}">
+                            
+                            {% csrf_token %}
+                            
+                            <!-- FORM -->
+                            <div class="row">
+
+                                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                                    
+                                    <div class="info">
+
+                                        <div class="row">
+                                            <div class="col-lg-11 mx-auto">
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                                        <div class="form">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label for="first_name">First Name</label>
+                                                                        <input type="text" class="form-control mb-4" id="first_name" name="first_name" value="{{user_first_name}}">
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label for="last_name">Last Name</label>
+                                                                        <input type="text" class="form-control mb-4" id="last_name" name="last_name" value="{{user_last_name}}">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            
+                                                            <div class="form-group">
+                                                                <label for="user_email">E-mail</label>
+                                                                <input type="text" class="form-control mb-4" name="user_email" id="user_email" value="{{user_email}}">
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                </div>
+
+
+                            </div>
+
+                            
+                            <!-- Model Footer -->
+                            <div class="modal-footer">
+                                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                <button type="submit" class="btn btn-success">Update</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <!-- TAB-2: Change Profile Avatar FORM -->
+                    <div class="tab-pane fade" id="icon-avatar" role="tabpanel" aria-labelledby="icon-avatar-tab">
+                        
+                        <!-- Change Password FORM -->
+                        <form method="POST" action="{% url 'update_profile_image' %}" enctype="multipart/form-data">
+                            
+                            {% csrf_token %}
+                            
+                            <!-- FORM -->
+                            <div class="upload mt-4 pr-md-4">
+                                <input type="file" name="profile_image" accept="image/*" id="input-file-max-fs id_profile_image" class="dropify" data-default-file="{{profile_image.url}}" data-max-file-size="5M" />
+                                <p class="mt-2"><i class="flaticon-cloud-upload mr-1"></i> Maximum size: 5 MB</p>
+                            </div>
+
+                            
+                            <!-- Model Footer -->
+                            <div class="modal-footer">
+                                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                <button type="submit" class="btn btn-primary">Upload Image</button>
+                            </div>
+
+                        </form>
+                     
+                    </div>
+
+                    <!-- TAB-3: Change API FORM -->
+                    <div class="tab-pane fade" id="icon-api" role="tabpanel" aria-labelledby="icon-api-tab">
+                        
+                        <!-- Change Password FORM -->
+                        <form method="POST" action="{% url 'update_profile_api' %}">
+                            
+                            {% csrf_token %}
+                            
+                            <!-- FORM -->
+                            <div class="row">
+
+                                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                                    
+                                        <div class="info">
+
+                                            <div class="row">
+                                                <div class="col-lg-11 mx-auto">
+                                                    <div class="row">
+                                                        <div class="col-xl-12 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                                            <div class="form">
+
+                                                                <div class="form-group">
+                                                                    <label for="binance_api_key">Binance API Key</label>
+                                                                    <input type="password" class="form-control mb-4" name="binance_api_key" id="binance_api_key" value="">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="binance_api_security_key">Binance API Security Key</label>
+                                                                    <input type="password" class="form-control mb-4" name="binance_api_security_key" id="binance_api_security_key" value="">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+
+
+                            </div>
+
+                            
+                            <!-- Model Footer -->
+                            <div class="modal-footer">
+                                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                <button type="submit" class="btn btn-info">Update API</button>
+                            </div>
+
+                        </form>
+                     
+                    </div>
+
+                    <!-- TAB-4: Change Password FORM -->
+                    <div class="tab-pane fade" id="icon-password" role="tabpanel" aria-labelledby="icon-password-tab">
+                        
+                        <!-- Change Password FORM -->
+                        <form method="POST" action="{% url 'change_current_user_password' %}">
+                            
+                            {% csrf_token %}
+                            
+                            <!-- FORM -->
+                            {{current_user_password_form}}
+
+                            
+                            <!-- Model Footer -->
+                            <div class="modal-footer">
+                                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                <button type="submit" class="btn btn-danger">Change Password</button>
+                            </div>
+
+                        </form>
+                     
+                    </div>
+
+
+
+                </div>
+                
+                
+                <!-- End TABS -->
+
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+<!-- ======================================= END MODELS ============================================= -->
+<!-- ================================================================================================ -->
+  
+
+
+{% endblock currentBodyContent %}
+
+<!-- Page Scripts -->
+{% block currentPageScriptsFiles %}
+
+<!-- Dropify -->
+<script src="{% static 'base/css/plugins/dropify/dropify.min.js' %}"></script>
+<script src="{% static 'base/css/plugins/jquery.blockUI.min.js' %}"></script>
+<script src="{% static 'base/js/account-settings.js' %}"></script>
+
+<!-- Change Password Form -->
+<script>
+
+    // Add form control Classes
+    $("#id_old_password").addClass("form-control")
+    $("#id_new_password1").addClass("form-control")
+    $("#id_new_password2").addClass("form-control")
+
+</script>
+
+{% endblock currentPageScriptsFiles %}

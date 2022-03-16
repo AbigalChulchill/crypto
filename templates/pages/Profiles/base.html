@@ -1,0 +1,463 @@
+<!-- Load Static Files -->
+{% load static %}
+
+<!-- Start HTML Code -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Main Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Important Meta Tags -->
+    <meta name="author" content="Elcaptaingrp.com" />
+    <meta
+      name="description"
+      content="Welcome To El-sherbiniy Crypto | The First Site Of Its Kind To Invist And Trading Crypto Coins"
+    />
+    <meta name="keywords" content="Crypto, Bitcoin, Coins" />
+
+    <!-- Page Title & Icon -->
+    <title>{% block title %} {% endblock title %}</title>
+    <link rel="shortcut icon" href="{% static 'base/images/logo.png' %}" />
+
+    <!-- Library Styles -->
+    <link rel="stylesheet" href="{% static 'base/css/libs/bootstrap.min.css' %}" />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="{% static 'base/css/plugins/plugins.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'base/css/scrollspyNav.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'base/css/plugins/animate.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Main Style -->
+    {% comment %}
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+    {% endcomment %}
+
+
+    <!-- Get Cash the API Connection State -->
+
+    {% if api_connection_status == 0 %}
+        <script>
+            // Check the API Connection State
+            localStorage.setItem('API_CONNECTION_STATE', 'TRUE')
+        </script>
+    {% else %}
+        <script>
+            // Check the API Connection State
+            localStorage.setItem('API_CONNECTION_STATE', 'FALSE')
+        </script>
+    {% endif %}
+
+    
+
+    <!-- Current Page Styles Files -->
+    {% block currentPageStylesFiles %} {% endblock currentPageStylesFiles %}
+  </head>
+  <body>
+    {% csrf_token %}
+
+    <!--  BEGIN NAVBAR  -->
+    <div class="header-container fixed-top">
+      <header class="header navbar navbar-expand-sm">
+        <ul class="navbar-nav theme-brand flex-row text-center">
+          <li class="nav-item theme-logo">
+            <a href="#">
+              <img
+                src="{% static 'base/images/logo.png' %}"
+                class="navbar-logo"
+                alt="logo"
+              />
+            </a>
+          </li>
+          <li class="nav-item theme-text">
+            <a href="#" class="nav-link"> CYRPTO </a>
+          </li>
+          <li class="nav-item toggle-sidebar">
+            <a
+              href="javascript:void(0);"
+              class="sidebarCollapse"
+              data-placement="bottom"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-list"
+              >
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3" y2="6"></line>
+                <line x1="3" y1="12" x2="3" y2="12"></line>
+                <line x1="3" y1="18" x2="3" y2="18"></line></svg
+            ></a>
+          </li>
+        </ul>
+
+        <ul class="navbar-item flex-row navbar-dropdown ml-auto">
+          <li
+            class="nav-item dropdown user-profile-dropdown order-lg-0 order-1"
+          >
+            <a
+              href="javascript:void(0);"
+              class="nav-link dropdown-toggle user"
+              id="userProfileDropdown"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-settings"
+              >
+                <circle cx="12" cy="12" r="3"></circle>
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+                ></path>
+              </svg>
+            </a>
+            <div
+              class="dropdown-menu position-absolute"
+              aria-labelledby="userProfileDropdown"
+            >
+              <div class="user-profile-section">
+                <div class="media mx-auto">
+                  <img
+                    src="{% if profile_image %}{{profile_image.url}}{% else %}/static/base/images/default.png{% endif %}"
+                    class="img-fluid mr-2"
+                    alt="avatar"
+                  />
+                  <div class="media-body">
+                    <h5>{{user_first_name}}</h5>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Profile -->
+              <div class="dropdown-item">
+                <a href="{% url 'display_user_profile' %}">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-user"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <span>Profile</span>
+                </a>
+              </div>
+
+              
+              <!-- Logout -->
+              <div class="dropdown-item">
+                <a href="{% url 'Logout' %}">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-log-out"
+                  >
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  <span>Log Out</span>
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </header>
+    </div>
+    <!--  END NAVBAR  -->
+
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container" id="container">
+      <div class="overlay"></div>
+      <div class="search-overlay"></div>
+
+      <!--  BEGIN SIDEBAR  -->
+      <div class="sidebar-wrapper sidebar-theme">
+        <nav id="sidebar">
+          <div class="profile-info">
+            <figure class="user-cover-image"></figure>
+            <div class="user-info">
+              <img
+                src="{% if profile_image %}{{profile_image.url}}{% else %}/static/base/images/default.png{% endif %}"
+                alt="profile image"
+              />
+              <h6 class="">{{user_first_name}}</h6>
+              <p class="" style="margin-top: 9px; overflow: visible">
+                {% if api_connection_status == 0 %}
+                <span class="badge outline-badge-success"> API Connected </span>
+                {% elif api_connection_status == 1 %}
+                <span class="badge outline-badge-danger">
+                  Invalid API Key or Security Key.
+                </span>
+                {% elif api_connection_status == 2 %}
+                <span class="badge outline-badge-dark">
+                  No API Key detected.
+                </span>
+                {% else %}
+                <span class="badge outline-badge-warning">
+                  No Internet Connection
+                </span>
+                {% endif %}
+              </p>
+            </div>
+          </div>
+
+          <div class="shadow-bottom"></div>
+
+          <ul class="list-unstyled menu-categories" id="accordionExample">
+            <li class="menu">
+              <a
+                href="{% url "User_Trading_Page" %}"
+                aria-expanded="true"
+                class="dropdown-toggle"
+              >
+                <div class="">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-home"
+                  >
+                    <path
+                      d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                    ></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                  <span>Dashboard</span>
+                </div>
+              </a>
+            </li>
+
+            <li class="menu">
+              <a
+                href="#submenu"
+                data-toggle="collapse"
+                aria-expanded="false"
+                class="dropdown-toggle"
+              >
+                <div class="">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-airplay"
+                  >
+                    <path
+                      d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"
+                    ></path>
+                    <polygon points="12 15 17 21 7 21 12 15"></polygon>
+                  </svg>
+                  <span> Comming Soon</span>
+                </div>
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-chevron-right"
+                  >
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </a>
+              <ul
+                class="collapse submenu list-unstyled"
+                id="submenu"
+                data-parent="#accordionExample"
+              >
+                <li>
+                  <a href="javascript:void(0);"> Submenu 1 </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0);"> Submenu 2 </a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="menu">
+              <a
+                href="#submenu2"
+                data-toggle="collapse"
+                aria-expanded="false"
+                class="dropdown-toggle"
+              >
+                <div class="">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-file"
+                  >
+                    <path
+                      d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
+                    ></path>
+                    <polyline points="13 2 13 9 20 9"></polyline>
+                  </svg>
+                  <span> Comming Soon</span>
+                </div>
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-chevron-right"
+                  >
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </a>
+              <ul
+                class="collapse submenu list-unstyled"
+                id="submenu2"
+                data-parent="#accordionExample"
+              >
+                <li>
+                  <a href="javascript:void(0);"> Submenu 1 </a>
+                </li>
+                <li>
+                  <a
+                    href="#sm2"
+                    data-toggle="collapse"
+                    aria-expanded="false"
+                    class="dropdown-toggle"
+                  >
+                    Submenu 2
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="feather feather-chevron-right"
+                    >
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </a>
+                  <ul
+                    class="collapse list-unstyled sub-submenu"
+                    id="sm2"
+                    data-parent="#submenu2"
+                  >
+                    <li>
+                      <a href="javascript:void(0);"> Sub-Submenu 1 </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);"> Sub-Submenu 2 </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);"> Sub-Submenu 3 </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!--  END SIDEBAR  -->
+
+      <!--  BEGIN CONTENT AREA  -->
+      <div id="content" class="main-content">
+        <div class="layout-px-spacing">
+          <!-- CONTENT AREA -->
+
+          <!-- Current Page Body Content-->
+          {% block currentBodyContent %} {% endblock currentBodyContent %}
+
+          <!-- CONTENT AREA -->
+        </div>
+
+        <!-- Footer -->
+        {% include 'pages/Profiles/footer.html' %}
+      </div>
+      <!--  END CONTENT AREA  -->
+    </div>
+    <!-- END MAIN CONTAINER -->
+
+    <!-- External Libraries Scripts -->
+    <script src="{% static 'base/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'base/js/popper.js' %}"></script>
+    <script src="{% static 'base/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'base/js/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'base/js/app.js' %}"></script>
+
+    <script>
+      $(document).ready(function () {
+        App.init();
+      });
+    </script>
+    <script src="{% static 'base/js/custom.js' %}"></script>
+    
+    <!-- NavBar -->
+    <script src="{% static 'base/js/scrollspyNav.js' %}"></script>
+
+    <!-- Current Page Scripts Files -->
+    {% block currentPageScriptsFiles %} {% endblock currentPageScriptsFiles %}
+  </body>
+</html>

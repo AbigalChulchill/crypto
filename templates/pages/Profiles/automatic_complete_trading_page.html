@@ -1,0 +1,280 @@
+<!-- Comment -->
+{% extends 'pages/Profiles/base.html' %}
+
+<!-- Comment -->
+{% load static %}
+
+<!-- Page Title -->
+{% block title %}{{user_first_name}} | Elsherbiniy Crypto{% endblock title %}
+
+<!-- Page Styles -->
+{% block currentPageStylesFiles %}
+
+<!-- Widgets Styles -->
+<link rel="stylesheet" type="text/css" href="{% static 'base/css/widgets/modules-widgets.css' %}" />
+
+<!-- Controls Style -->
+<link href="{% static 'base/css/elements/miscellaneous.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'base/css/elements/breadcrumb.css' %}" rel="stylesheet" type="text/css" />
+
+
+<!-- Tables -->
+<link href="{% static 'base/css/table-basic.css' %}" rel="stylesheet" type="text/css" />
+
+
+<!-- Sweet alerts -->
+<script src="{% static 'base/css/plugins/sweetalerts/promise-polyfill.js' %}"></script>
+<link href="{% static 'base/css/plugins/sweetalerts/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'base/css/plugins/sweetalerts/sweetalert.css' %}" rel="stylesheet" type="text/css" />
+
+
+<!-- Page Styles -->
+<style>
+    ::-webkit-scrollbar {
+      width: 2px;
+    }
+  
+    ::-webkit-scrollbar-track {
+      background: #fff;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+      background: #f4f4f4;
+    }
+  
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f0f0f0;
+    }
+  
+
+    .breadcrumb-one{
+      display: flex;
+      justify-content: space-between;
+    }
+    
+
+    .coin-container{
+
+        background-color: #fff;
+        box-shadow: 0px 0px 10px 7px #f0f0f0;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        max-width: 40%;
+    }
+
+    .coin-container .coin-logo{
+        width: 70%;
+        height: auto;
+        overflow: hidden;
+        border-radius: 50%;
+        border: 10px solid #f0f0f0;
+        display: inline-block;
+        padding: 10px;
+    }
+
+    .coin-container .coin-logo img{
+        width: 100%;
+        border-radius: 50%;
+    }
+  
+    
+    .coin-container .coin-data{
+        margin-top: 10px;
+    }
+
+
+    .coin-container .coin-data .coin-name{
+        background-color: #fff;
+        box-shadow: 0px 0px 5px 1px #d7d7d7;
+        display: inline-block;
+        padding: 5px 30px;
+        border-radius: 5px;
+        font-size: 24px;
+        font-weight: 700;
+        font-family: system-ui;
+    }
+
+    .coin-container .coin-data .coin-ammount-container{
+        font-size: 24px;
+        font-family: monospace;
+    }
+
+    .coins-vs-container{
+        position: relative;
+    }
+
+    .coins-vs-container .coins-vs{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    .coins-vs-container .coins-vs .vs-span{
+        font-size: 48px;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 10px;
+    }
+    .coins-vs-container .coins-vs .starting-time{
+        display: block;
+        font-size: 24px;
+        font-weight: 600;
+        font-family: monospace;
+    }
+    .transactions-table{
+        background-color: #fff;
+        padding: 10px;
+        overflow-y: scroll;
+        border-radius: 10px;
+        box-shadow: 0 0 6px 1px #e1e1e1;
+    }
+
+  </style>
+
+{% endblock currentPageStylesFiles %}
+
+<!-- Page Content -->
+{% block currentBodyContent %}
+
+<!--Main ROW -->
+<div class="row layout-top-spacing">
+  <!-- Start of Controls -->
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+    <nav class="breadcrumb-one" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "User_Trading_Page" %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+            <li class="breadcrumb-item"><a href="{% url "User_Trading_Page" %}">Trading Orders</a></li>
+            <li class="breadcrumb-item"><a id="current_trading_order_id" data-id="{{automatic_trading_order}}">{{automatic_trading_order}}</a></li>
+        </ol>
+
+    </nav>
+  </div>
+  <!-- Start of Controls -->
+  
+
+<!-- First Row [COins Logo ]-->
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing" style="display: flex; justify-content: space-between;">
+
+    <!-- First COin -->
+    <div class="coin-container">
+        
+        <!-- Coin Logo-->
+        <div class="coin-logo">
+            <img src="{{first_coin.coin_image.url}}" alt="Logo">
+        </div>
+
+        <!-- Coins Data-->
+        <div class="coin-data">
+            <h2 class="coin-name">{{first_coin.coin_name}}</h2>
+            <div class="coin-ammount-container"> 
+                <span class="coin-ammount" id="first_coin_balance">{{current_trading_coins_order.first_coin_market_value}}</span> 
+                <span class="coin-symbol">{{first_coin.coin_symbol}}</span>
+            </div>
+        </div>
+
+    </div> 
+
+    <!-- VS Section-->
+    <div class="coins-vs-container">
+        
+        <div class="coins-vs">
+            <span class="vs-span">VS</span>
+            <span class="starting-time"> 01:01:12 </span>
+        </div>
+
+    </div>
+
+    <!-- Second COin -->
+    <div class="coin-container">
+        
+        <!-- Coin Logo-->
+        <div class="coin-logo">
+            <img src="{{second_coin.coin_image.url}}" alt="Logo">
+        </div>
+
+        <!-- Coins Data-->
+        <div class="coin-data">
+            <h2 class="coin-name">{{second_coin.coin_name}}</h2>
+            <div class="coin-ammount-container"> 
+                <span class="coin-ammount" id="second_coin_balance">{{current_trading_coins_order.second_coin_market_value}}</span> 
+                <span class="coin-symbol">{{second_coin.coin_symbol}}</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Trading Table Table -->
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing transactions-table" style="margin-bottom: 20px;">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Market High</th>
+                    <th>Market Open</th>
+                    <th>Market Close</th>
+                    <th>Market Low</th>
+                </tr>
+            </thead>
+            <tbody id="running-profile-trades-market-data">
+                
+                
+                <tr>
+                    <td id="market_high_data">{{current_trading_coins_order.market_high}}</td>
+                    <td id="market_open_data">{{current_trading_coins_order.market_open}}</td>
+                    <td id="market_close_data">{{current_trading_coins_order.market_close}}</td>
+                    <td id="market_low_data">{{current_trading_coins_order.market_low}}</td>
+                </tr>
+                
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Trading Table Table -->
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing transactions-table">
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>{{first_coin.coin_symbol}} Quantity</th>
+                    <th>{{second_coin.coin_symbol}} Quantity</th>
+                    <th>Order Type</th>
+                </tr>
+            </thead>
+            <tbody id="running-profile-trades">
+                
+                {% for trade in trading_orders %}
+                    <tr>
+                        <td>{{trade.id}}</td>
+                        <td>{{trade.first_trading_coin_quantity}}</td>
+                        <td>{{trade.second_trading_coin_quantity}}</td>
+                        <td>{{trade.trading_order_type.trading_order_type_symbol}}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+</div>
+
+ 
+  
+{% endblock currentBodyContent %}
+
+<!-- Page Scripts -->
+{% block currentPageScriptsFiles %}
+
+
+
+{% endblock currentPageScriptsFiles %}

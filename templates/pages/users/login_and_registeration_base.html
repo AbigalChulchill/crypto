@@ -1,0 +1,74 @@
+{% load static %}
+
+<!-- Start HTML Code -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Main Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Important Meta Tags -->
+    <meta name="author" content="elsherbiniy.me" />
+    <meta
+      name="description"
+      content="Welcome To Elsherbiniy Crypto"
+    />
+    <meta name="keywords" content="Crypto, trading, bitcoin" />
+
+    <!-- Library Styles -->
+    <link
+      rel="stylesheet"
+      href="{% static 'base/css/libs/bootstrap.min.css' %}"
+    />
+
+    <!-- Main Style -->
+    <link rel="stylesheet" href="{% static 'base/css/libs/forms.css' %}" />
+
+    <!-- Current Page Styles Files -->
+    {% block StylesFiles %} {% endblock StylesFiles %}
+
+    <!-- Page Title & Icon -->
+    <title>{% block title %} {% endblock title %}</title>
+    <link rel="shortcut icon" href="{% static 'base/images/logo.png' %}" />
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+
+    <!-- Body Content -->
+    {% block body %} {% endblock body %}
+
+    <!-- External Libraries Scripts -->
+    <script src="{% static 'base/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'base/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'base/js/popper.js' %}"></script>
+
+  
+    <script type="text/javascript">
+      $(document).ready(function () {
+        // Remove form Lables
+        var labels = document.querySelectorAll("label");
+        labels.forEach((e) => e.remove());
+
+        // remove help text
+        var helpText = document.querySelectorAll(".helptext");
+        helpText.forEach((e) => e.remove());
+
+        // remove the brs
+        var brs = document.querySelectorAll("br");
+        brs.forEach((e) => e.remove());
+      });
+
+    </script>
+
+    <!-- Current Page Scripts Files -->
+    {% block ScriptsFiles %} {% endblock ScriptsFiles %}
+
+  </body>
+</html>

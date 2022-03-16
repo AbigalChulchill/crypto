@@ -1,0 +1,88 @@
+{% extends 'pages/users/login_and_registeration_base.html' %} {% load static %}
+
+<!-- Page Title -->
+{% block title %}Create Account | Elsherbiniy Crypto{% endblock title %}
+
+<!-- Body Content-->
+{% block body %}
+{% csrf_token %}
+<!-- Start of Formly [ 1 ] Basic  -->
+<section class="Formly Formly-Flat">
+  <div class="Formly-Flat-Form-Container">
+    <!-- Start Of Formly Head [ Logo ] -->
+    <div class="Formly-Header">
+      <div class="Formly-Header-logo">
+        <!-- Create Logo Using Img [ png , jpg , svg] Remove Comment To Use This Option-->
+
+        <div class="img-log">
+          <img
+            src="{% static 'base/images/logo.png' %}"
+            alt="logo"
+            title="Formy"
+          />
+        </div>
+      </div>
+      <!-- Logo Name-->
+    </div>
+    <!-- End Of Formly Head [ Logo ] -->
+    <div class="Formly-Flat-Forms Formly-Flat-Register-Form">
+      <!-- Start Of Form Header -->
+      <div class="Formly-Flat-Form-Header">
+        <div class="Formly-Flat-Form-Title">
+          <h3>Login into account</h3>
+        </div>
+        <div class="Formly-Flat-Form-sub-title">
+          <span>Use your credenitials to access your account</span>
+        </div>
+      </div>
+      <!-- End Of Form Header -->
+      <!-- Start Of Form -->
+      <form method="POST">
+        {% csrf_token %}
+        <div>{{form}}</div>
+
+        <div class="col-12">
+          <div class="Formly-Submit">
+            <button type="submit" class="Formly-btn">Login</button>
+          </div>
+          <div class="Formly-Forget-Password">
+            <span>Forget Password ?</span>
+          </div>
+        </div>
+      </form>
+      <!-- End Of Form -->
+      <!-- Start Of Form Footer -->
+      <div class="row">
+        <div class="col-12 Formly-Flat-swap-Link">
+          <span
+            >Don't have an account?
+            <a class="Register" href="{% url 'Registeration' %}"
+              >Register Here</a
+            ></span
+          >
+        </div>
+      </div>
+      <!-- End Of Form Footer -->
+    </div>
+  </div>
+</section>
+<!-- End Of Formly [ 1 ] Basic  -->
+
+{% endblock body %}
+
+<!-- Current Page Scripts Files -->
+{% block ScriptsFiles %}
+<script type="text/javascript">
+  $(document).ready(function () {
+    // Add Username placeholder
+    document
+      .querySelector("#id_username")
+      .setAttribute("placeholder", "Username");
+
+    // Add Password placeholder
+    document
+      .querySelector("#id_password")
+      .setAttribute("placeholder", "Password");
+  });
+</script>
+{% endblock ScriptsFiles %}

@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #1a2627;
+        font-family: sans-serif;
+        position: relative;
+        width: 100%;
+        height: 100vh;
+      }
+
+      .Home_page {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+
+      .Home_page .Home_page_logo {
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        display: inline-block;
+      }
+      .Home_page .Home_page_logo img {
+        width: 100%;
+      }
+
+      .application_name {
+        margin-top: 20px;
+        color: #fff;
+      }
+
+      .application_redirect {
+        margin-top: 10px;
+      }
+
+      .application_redirect span {
+        color: #fff;
+        font-size: 18px;
+      }
+
+      .application_redirect span a {
+        color: #ffeb80;
+        margin-left: 5px;
+        margin-right: 5px;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+
+    <div class="Home_page">
+      <!-- Application Logo -->
+      <div class="Home_page_logo">
+        <img src="{% static 'base/images/logo.png' %}" alt="logo" />
+      </div>
+
+      <!-- Application Name -->
+      <div class="application_name">
+        <h1>El-sherbiniy Crypto</h1>
+      </div>
+
+      <!-- Application Login and Registeration -->
+      <div class="application_redirect">
+        <span
+          >If you have an account, please <a href="{% url 'Login' %}">Login</a>.
+          Or <a href="{% url 'Registeration' %}">Create account</a></span
+        >
+      </div>
+    </div>
+
+    <script src="" async defer></script>
+  </body>
+</html>
